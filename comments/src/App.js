@@ -1,21 +1,35 @@
 import React, {Component} from 'react'
 
+import {database} from './firebase'
+
 import NewComment from './NewComment'
 import Comments from './Comments'
 
 
 class App extends Component{
   state = {
-    comments: [
-      'Comment 1',
-      'Comment 2',
-      'Comment 3'
-    ]
+    comments: {},
+    isLoading: false
   }
 
-  sendComment = commment => {
-    this.setState({
-      comments: [...this.state.comments, commment]
+  sendComment = comment => {
+    //Criar novo ID no firebase
+    const newID = database.ref().child('comments').push().key
+    //Associar novo ID ao novo comentário
+    const comments = {}
+    comments['comments/' + newID] = {
+      comment
+    }
+    //Realizar update
+    database.ref().update(comments)
+  }
+
+  componentDidMount(){
+    this.setState({isLoading: true})
+    this.comments = database.ref('comments');
+    this.comments.on('value', snapshot => {
+      this.setState({ comments: snapshot.val() })
+      this.setState({isLoading: false})
     })
   }
   
@@ -24,6 +38,9 @@ class App extends Component{
       <div className="App">
         <NewComment sendComment={this.sendComment} />
         <Comments comments={this.state.comments} />
+        {
+          this.state.isLoading && <div><b>Carregando comentários...</b></div>
+        }
       </div>
     );
   }
