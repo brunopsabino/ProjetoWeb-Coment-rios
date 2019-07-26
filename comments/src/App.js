@@ -1,7 +1,5 @@
 import React, {Component} from 'react'
 
-import {database} from './firebase'
-
 import NewComment from './NewComment'
 import Comments from './Comments'
 
@@ -14,6 +12,7 @@ class App extends Component{
 
   sendComment = comment => {
     //Criar novo ID no firebase
+    const {database} = this.props
     const newID = database.ref().child('comments').push().key
     //Associar novo ID ao novo comentário
     const comments = {}
@@ -25,6 +24,7 @@ class App extends Component{
   }
 
   componentDidMount(){
+    const {database} = this.props
     this.setState({isLoading: true})
     this.comments = database.ref('comments');
     this.comments.on('value', snapshot => {
