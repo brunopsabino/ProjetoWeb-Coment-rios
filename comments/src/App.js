@@ -3,6 +3,7 @@ import React, {Component} from 'react'
 import NewComment from './NewComment'
 import Comments from './Comments'
 
+import './App.css'
 
 class App extends Component{
   state = {
@@ -35,12 +36,32 @@ class App extends Component{
   
   render (){
     return (
-      <div className="App">
-        <NewComment sendComment={this.sendComment} />
-        <Comments comments={this.state.comments} />
-        {
-          this.state.isLoading && <div><b>Carregando comentários...</b></div>
-        }
+      <div className="container">
+        <div class="row">
+          <div class="col-2"></div>
+          <div class="col-8">
+            <NewComment sendComment={this.sendComment} />
+          </div>
+          <div class="col-2"></div>
+        </div>
+
+        <div class="row">
+          <div class="col-2"></div>
+          <div class="col-8">
+            <Comments comments={this.state.comments} />
+          </div>
+          <div class="col-2"></div>
+        </div>
+
+        <div class="row">
+          <div class="col-2"></div>
+          <div class="col-8">
+            {
+              this.state.isLoading && <div><b>Carregando comentários...</b></div>
+            }
+          </div>  
+          <div class="col-2"></div>
+        </div>  
       </div>
     );
   }

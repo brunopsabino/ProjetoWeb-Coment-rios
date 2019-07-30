@@ -1,4 +1,5 @@
 import React from 'react'
+import './Comment.css'
 
 const Comment = ({c}) => {
     //Condicional para testes
@@ -7,7 +8,11 @@ const Comment = ({c}) => {
         comment = c.comment
     }
     return(
-        <div>Comentário: {comment}</div>
+        <div className="_Comment">
+            <div className="_Comment_Component">
+                <b>Comentário:</b> {comment}
+            </div>
+        </div>
     )
 }
 
