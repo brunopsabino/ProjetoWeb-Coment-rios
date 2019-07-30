@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 
 import NewComment from './NewComment'
 import Comments from './Comments'
+import Header from './Header'
 
 import './App.css'
 
@@ -37,9 +38,11 @@ class App extends Component{
   render (){
     return (
       <div className="container">
+      
         <div class="row">
           <div class="col-2"></div>
           <div class="col-8">
+            <Header />
             <NewComment sendComment={this.sendComment} />
           </div>
           <div class="col-2"></div>
@@ -59,9 +62,15 @@ class App extends Component{
             {
               this.state.isLoading && <div><b>Carregando comentários...</b></div>
             }
+            <footer id="sticky-footer" class="py-4 bg-dark text-white-50">
+              <div class="container text-center">
+                <small>Desenvolvido por: <a href="https://github.com/brunopsabino">Bruno Sabino</a></small>
+              </div>
+            </footer>
           </div>  
           <div class="col-2"></div>
-        </div>  
+        </div> 
+        
       </div>
     );
   }
