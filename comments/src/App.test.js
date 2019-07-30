@@ -5,6 +5,8 @@ import {shallow} from 'enzyme'
 import Comments from './Comments'
 import NewComment from './NewComment'
 
+import { EventEmitter } from 'events'
+
 describe('<App />', () =>{
   it('renders without crashing', () => {
     const database = {
@@ -48,6 +50,45 @@ describe('<App />', () =>{
         }
       })
   })
+
+  it('renders comments from firebase', () => {
+    const database = {
+      ref: jest.fn()
+    }
+    //O método on pode ser chamado através de um eventEmitter
+    const eventEmitter =  new EventEmitter()
+      database.ref.mockReturnValue(eventEmitter) 
+
+    const wrapper = shallow(<App database={database} />)
+
+    //não recebeu value
+    expect(wrapper.find(Comments).length).toBe(1)
+    expect(wrapper.find(NewComment).length).toBe(1)
+    expect(wrapper.find('div').length).toBe(2)
+    expect(wrapper.find('b').length).toBe(1)
+
+    //recebendo value
+    const comments = {
+      a: {comment: 'comentário 1'},
+      b: {comment: 'comentário 2'}
+    }
+    const val = jest.fn()
+    val.mockReturnValue(comments)
+    eventEmitter.emit('value', {
+      val
+    })
+    //Força atualização do componente
+    wrapper.update()
+
+    //testes
+    expect(wrapper.state().isLoading).toBeFalsy()
+    expect(wrapper.state().comments).toBe(comments)
+    expect(wrapper.find(Comments).get(0).props.comments).toBe(comments)
+    expect(wrapper.find(NewComment).get(0).props.sendComment).toBe(wrapper.instance().sendComment)
+    expect(wrapper.find('b').length).toBe(0)
+  })
+
+
 })
 
 
