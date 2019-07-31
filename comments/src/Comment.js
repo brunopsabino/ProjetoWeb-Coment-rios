@@ -3,7 +3,7 @@ import './Comment.css'
 
 const Comment = ({c}) => {
     //Condicional para testes
-    let comment = 'vazio'
+    let comment = 'Você inseriu um comentário vazio!'
     if(c && c.comment){
         comment = c.comment
     }

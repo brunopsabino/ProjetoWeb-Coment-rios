@@ -2,10 +2,10 @@ import React from 'react'
 
 const Header = () => {
     return(
-        <div class="jumbotron jumbotron-fluid">
-            <div class="container" align="center">
-                <h3 class="display-4">Comentários</h3>
-                <p class="lead">Sistema de comentários desenvolvido em ReactJS + Firebase</p>
+        <div className="jumbotron jumbotron-fluid">
+            <div className="container" align="center">
+                <h3 className="display-4">Comentários</h3>
+                <p className="lead">Sistema de comentários desenvolvido em ReactJS + Firebase</p>
             </div>
         </div>
     )

@@ -39,36 +39,36 @@ class App extends Component{
     return (
       <div className="container">
       
-        <div class="row">
-          <div class="col-2"></div>
-          <div class="col-8">
+        <div className="row">
+          <div className="col-2"></div>
+          <div className="col-8">
             <Header />
             <NewComment sendComment={this.sendComment} />
           </div>
-          <div class="col-2"></div>
+          <div className="col-2"></div>
         </div>
 
-        <div class="row">
-          <div class="col-2"></div>
-          <div class="col-8">
+        <div className="row">
+          <div className="col-2"></div>
+          <div className="col-8">
             <Comments comments={this.state.comments} />
           </div>
-          <div class="col-2"></div>
+          <div className="col-2"></div>
         </div>
 
-        <div class="row">
-          <div class="col-2"></div>
-          <div class="col-8">
+        <div className="row">
+          <div className="col-2"></div>
+          <div className="col-8">
             {
               this.state.isLoading && <div><b>Carregando comentários...</b></div>
             }
-            <footer id="sticky-footer" class="py-4 bg-dark text-white-50">
-              <div class="container text-center">
+            <footer id="sticky-footer" className="py-4 bg-dark text-white-50">
+              <div className="container text-center">
                 <small>Desenvolvido por: <a href="https://github.com/brunopsabino">Bruno Sabino</a></small>
               </div>
             </footer>
           </div>  
-          <div class="col-2"></div>
+          <div className="col-2"></div>
         </div> 
         
       </div>
