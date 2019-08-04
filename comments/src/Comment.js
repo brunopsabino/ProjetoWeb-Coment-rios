@@ -1,25 +1,46 @@
-import React from 'react'
+import React, {Component} from 'react'
+//import {database} from './firebase'
 import './Comment.css'
 
-const Comment = ({c}) => {
-    //Condicional para testes
-    let comment = 'Você inseriu um comentário vazio!'
-    if(c && c.comment){
-        comment = c.comment
+class Comment extends Component {
+
+    constructor(props){
+        super(props)
+
+        this.state = {
+            comment: 'Você inseriu um comentário vazio!'
+        }
+       if(this.props.c && this.props.c.comment){
+           this.state.comment = this.props.c.comment
+       }
+       
     }
 
-    return(
-        
-            <div className="row">
-                <div className="col-sm-10 col-md-8 col-lg-10 _Comment_Component">
-                    <b>Comentário:</b> {comment}
+    deleteComment(comm) {
+        //const newID = database.ref().child('comments').value
+        /*const key = database.ref.child('comments').push().getKey()
+            database.ref.child('comments').child(key).setValue(comm)
+            database.ref.child('comments').child(key).removeValue()*/
+        //console.log(newID)
+        console.log('delete' + comm)
+    }
+    
+
+    render () {
+            return(
+                
+                <div className="row">
+                    <div className="col-sm-10 col-md-8 col-lg-10 _Comment_Component">
+                        <b>Comentário:</b> {this.state.comment}
+                    </div>
+                    <div className="col-sm-2 col-md-4 col-lg-2 _Comment_Component">
+                        
+                    </div>
                 </div>
-                <div className="col-sm-2 col-md-4 col-lg-2 _Comment_Component">
-                    <button className="btn btn-danger btn-sm">Excluir</button>
-                </div>
-            </div>
-        
-    )
+            
+        )
+    }
+   
 }
 
 export default Comment
