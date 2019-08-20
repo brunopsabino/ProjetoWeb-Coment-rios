@@ -2,6 +2,7 @@
 Projeto Web em React para a manipulação de comentários
 - Firebase Realtime Database
 - Firebase Hosting
+- Firebase Authentication
 - Testes unitários com Enzyme
 - Functional Stateless Components
 - Bootstrap
