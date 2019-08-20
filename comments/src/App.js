@@ -3,13 +3,17 @@ import React, {Component} from 'react'
 import NewComment from './NewComment'
 import Comments from './Comments'
 import Header from './Header'
+import Login from './Login'
 
 import './App.css'
 
 class App extends Component{
   state = {
     comments: {},
-    isLoading: false
+    isLoading: false,
+    isAuth: false,
+    isAuthErr: false,
+    AuthErr: ''
   }
 
   sendComment = comment => {
@@ -25,13 +29,40 @@ class App extends Component{
     database.ref().update(comments)
   }
 
+  login = async(email, passwd) => {
+    const {auth} = this.props
+    this.setState({
+      AuthErr: '',
+      isAuthErr: false
+    })
+    try{
+      await auth.signInWithEmailAndPassword(email, passwd)
+      console.log('logar', email, passwd)
+    }catch(err){
+     this.setState({
+       AuthErr: err.code,
+       isAuthErr: true
+     })
+    }
+    
+  }
+
   componentDidMount(){
-    const {database} = this.props
+    const {database, auth} = this.props
     this.setState({isLoading: true})
     this.comments = database.ref('comments');
     this.comments.on('value', snapshot => {
       this.setState({ comments: snapshot.val() })
       this.setState({isLoading: false})
+    })
+
+    auth.onAuthStateChanged(user => {
+      if(user){
+        this.setState({
+          isAuth: true,
+          user
+        })
+      }
     })
   }
 
@@ -43,7 +74,8 @@ class App extends Component{
           <div className="col-2"></div>
           <div className="col-8">
             <Header />
-            <NewComment sendComment={this.sendComment} />
+            {!this.state.isAuth && <Login login={this.login} />}
+            {this.state.isAuth && <NewComment sendComment={this.sendComment} /> }
           </div>
           <div className="col-2"></div>
         </div>
