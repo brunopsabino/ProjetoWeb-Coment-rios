@@ -8,11 +8,16 @@ class Comment extends Component {
         super(props)
 
         this.state = {
-            comment: 'Você inseriu um comentário vazio!'
+            comment: 'Você inseriu um comentário vazio!',
+            email: 'Vazio'
         }
        if(this.props.c && this.props.c.comment){
            this.state.comment = this.props.c.comment
        }
+       if(this.props.c && this.props.c.email){
+        this.state.email = this.props.c.email
+       }
+
        
     }
 
@@ -32,6 +37,9 @@ class Comment extends Component {
                 <div className="row">
                     <div className="col-sm-10 col-md-8 col-lg-10 _Comment_Component">
                         <b>Comentário:</b> {this.state.comment}
+                        <br/> 
+                        <b>Enviado por:</b> {this.state.email}
+                        <hr/>
                     </div>
                     <div className="col-sm-2 col-md-4 col-lg-2 _Comment_Component">
                         

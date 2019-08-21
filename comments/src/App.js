@@ -4,6 +4,7 @@ import NewComment from './NewComment'
 import Comments from './Comments'
 import Header from './Header'
 import Login from './Login'
+import User from './User'
 
 import './App.css'
 
@@ -13,7 +14,8 @@ class App extends Component{
     isLoading: false,
     isAuth: false,
     isAuthErr: false,
-    AuthErr: ''
+    AuthErr: '',
+    user: {}
   }
 
   sendComment = comment => {
@@ -23,7 +25,9 @@ class App extends Component{
     //Associar novo ID ao novo comentário
     const comments = {}
     comments['comments/' + newID] = {
-      comment
+      comment,
+      email: this.state.user.email,
+      userid: this.state.user.uid
     }
     //Realizar update
     database.ref().update(comments)
@@ -56,14 +60,25 @@ class App extends Component{
       this.setState({isLoading: false})
     })
 
+    //Verifica o estado da autenticação
     auth.onAuthStateChanged(user => {
       if(user){
         this.setState({
           isAuth: true,
           user
         })
+      }else{
+        this.setState({
+          isAuth: false,
+          user: {}
+        })
       }
     })
+  }
+
+  logout = () =>{
+    const {auth} = this.props
+    auth.signOut()
   }
 
   render (){
@@ -74,6 +89,7 @@ class App extends Component{
           <div className="col-2"></div>
           <div className="col-8">
             <Header />
+            {this.state.isAuth && <User email={this.state.user.email} logout={this.logout} />}
             {!this.state.isAuth && <Login login={this.login} />}
             {this.state.isAuth && <NewComment sendComment={this.sendComment} /> }
           </div>
